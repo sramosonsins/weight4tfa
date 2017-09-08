@@ -1,0 +1,47 @@
+
+Open log file...
+Reading GTF file...
+ Excluded codons: Stop Codon starting at position 865.
+ Excluded codons: Stop Codon starting at position 961.
+ Excluded codons: Stop Codon starting at position 991.
+ Excluded codons: Stop Codon starting at position 1054.
+ Excluded codons: Stop Codon starting at position 1099.
+ Excluded codons: Stop Codon starting at position 1177.
+ Excluded codons: Stop Codon starting at position 1189.
+ Excluded codons: Stop Codon starting at position 1354.
+ Excluded codons: Stop Codon starting at position 1387.
+ Excluded codons: Stop Codon starting at position 1408.
+ Excluded codons: Stop Codon starting at position 1435.
+ Excluded codons: Stop Codon starting at position 1447.
+ Excluded codons: Stop Codon starting at position 1483.
+ Excluded codons: Stop Codon starting at position 1507.
+ Excluded codons: Stop Codon starting at position 1573.
+ Excluded codons: Stop Codon starting at position 1645.
+ Excluded codons: Stop Codon starting at position 1669.
+ Excluded codons: Stop Codon starting at position 1693.
+ Excluded codons: Stop Codon starting at position 1879.
+ Excluded codons: Stop Codon starting at position 2191.
+Reading GTF file...GFF file Warning: end (2210) is larger than number of total sites (2000). Row 7 not analyzed.
+ 
+Reading GTF file...
+ Excluded codons: Stop Codon starting at position 865.
+ Excluded codons: Stop Codon starting at position 961.
+ Excluded codons: Stop Codon starting at position 991.
+ Excluded codons: Stop Codon starting at position 1054.
+ Excluded codons: Stop Codon starting at position 1099.
+ Excluded codons: Stop Codon starting at position 1177.
+ Excluded codons: Stop Codon starting at position 1189.
+ Excluded codons: Stop Codon starting at position 1354.
+ Excluded codons: Stop Codon starting at position 1387.
+ Excluded codons: Stop Codon starting at position 1408.
+ Excluded codons: Stop Codon starting at position 1435.
+ Excluded codons: Stop Codon starting at position 1447.
+ Excluded codons: Stop Codon starting at position 1483.
+ Excluded codons: Stop Codon starting at position 1507.
+ Excluded codons: Stop Codon starting at position 1573.
+ Excluded codons: Stop Codon starting at position 1645.
+ Excluded codons: Stop Codon starting at position 1669.
+ Excluded codons: Stop Codon starting at position 1693.
+ Excluded codons: Stop Codon starting at position 1879.
+ Excluded codons: Stop Codon starting at position 2191.
+Program Ended

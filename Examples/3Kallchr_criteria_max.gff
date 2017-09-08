@@ -1,0 +1,6 @@
+#seqname	source	feature	start	end	score	strand	frame	attributes
+chr10		all	1	3000		 	 	gene_id ;transcript_id ;
+chr10	ensembl	CDS	737	2210	.	+	2	gene_id "ENSSSCG00000010794";transcript_id max_criteria_"ENSSSCG00000010794";
+chr12		all	1	2000		 	 	gene_id ;transcript_id ;
+chr14		all	1	3000		 	 	gene_id ;transcript_id ;
+chr14	ensembl	CDS	737	2210	.	+	2	gene_id "ENSSSCG00000010794";transcript_id max_criteria_"ENSSSCG00000010794";

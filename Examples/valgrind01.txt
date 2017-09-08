@@ -1,0 +1,115 @@
+==41== Memcheck, a memory error detector
+==41== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==41== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==41== Command: ../bin/weight4tfa -i 3Kallchr.tfa.gz -o 3Kallchr.tfa_weights.gz -g ./3Kallchr.gtf nonsynonymous Nuclear_Universal -c max -n chr10,chr12,chr14 -l 3000,2000,3000 -G 2
+==41== 
+--41-- Valgrind options:
+--41--    --leak-check=full
+--41--    --track-origins=yes
+--41--    -v
+--41-- Contents of /proc/version:
+--41--   Linux version 4.9.41-moby (root@11fbdc1f630f) (gcc version 6.2.1 20160822 (Alpine 6.2.1) ) #1 SMP Wed Sep 6 00:05:16 UTC 2017
+--41-- 
+--41-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-sse3-avx
+--41-- Page sizes: currently 4096, max supported 4096
+--41-- Valgrind library directory: /usr/lib64/valgrind
+--41-- Reading syms from /valgrind_debugging/weight4tfa_pack/bin/weight4tfa
+--41-- Reading syms from /usr/lib64/ld-2.17.so
+--41-- Reading syms from /usr/lib64/valgrind/memcheck-amd64-linux
+--41--    object doesn't have a symbol table
+--41--    object doesn't have a dynamic symbol table
+--41-- Scheduler: using generic scheduler lock implementation.
+--41-- Reading suppressions file: /usr/lib64/valgrind/default.supp
+==41== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-41-by-???-on-166672eefb48
+==41== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-41-by-???-on-166672eefb48
+==41== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-41-by-???-on-166672eefb48
+==41== 
+==41== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==41== don't want to do, unless you know exactly what you're doing,
+==41== or are doing some strange experiment):
+==41==   /usr/lib64/valgrind/../../bin/vgdb --pid=41 ...command...
+==41== 
+==41== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==41==   /path/to/gdb ../bin/weight4tfa
+==41== and then give GDB the following command
+==41==   target remote | /usr/lib64/valgrind/../../bin/vgdb --pid=41
+==41== --pid is optional if only one valgrind process is running
+==41== 
+--41-- REDIR: 0x4019200 (ld-linux-x86-64.so.2:strlen) redirected to 0x38056d91 (???)
+--41-- REDIR: 0x4018fd0 (ld-linux-x86-64.so.2:index) redirected to 0x38056dab (???)
+--41-- Reading syms from /usr/lib64/valgrind/vgpreload_core-amd64-linux.so
+--41-- Reading syms from /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so
+==41== WARNING: new redirection conflicts with existing -- ignoring it
+--41--     old: 0x04019200 (strlen              ) R-> (0000.0) 0x38056d91 ???
+--41--     new: 0x04019200 (strlen              ) R-> (2007.0) 0x04c2ba90 strlen
+--41-- REDIR: 0x4019180 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4c2cbe0 (strcmp)
+--41-- REDIR: 0x4019d70 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4c2fc20 (mempcpy)
+--41-- Reading syms from /usr/lib64/libm-2.17.so
+--41-- Reading syms from /usr/local/lib/libz.so.1.2.10
+--41-- Reading syms from /usr/lib64/libc-2.17.so
+--41-- REDIR: 0x53daec0 (libc.so.6:strcasecmp) redirected to 0x4a237b0 (_vgnU_ifunc_wrapper)
+--41-- REDIR: 0x53d7c40 (libc.so.6:strnlen) redirected to 0x4a237b0 (_vgnU_ifunc_wrapper)
+--41-- REDIR: 0x53dd190 (libc.so.6:strncasecmp) redirected to 0x4a237b0 (_vgnU_ifunc_wrapper)
+--41-- REDIR: 0x53da6a0 (libc.so.6:memset) redirected to 0x4a237b0 (_vgnU_ifunc_wrapper)
+--41-- REDIR: 0x53da650 (libc.so.6:memcpy@GLIBC_2.2.5) redirected to 0x4a237b0 (_vgnU_ifunc_wrapper)
+--41-- REDIR: 0x53d9630 (libc.so.6:__GI_strrchr) redirected to 0x4c2b450 (__GI_strrchr)
+--41-- REDIR: 0x53da700 (libc.so.6:__GI_memset) redirected to 0x4c2ee80 (memset)
+--41-- REDIR: 0x53d7550 (libc.so.6:strcpy) redirected to 0x4a237b0 (_vgnU_ifunc_wrapper)
+--41-- REDIR: 0x53e5300 (libc.so.6:__strcpy_sse2_unaligned) redirected to 0x4c2bab0 (strcpy)
+--41-- REDIR: 0x53d60c0 (libc.so.6:strcmp) redirected to 0x4a237b0 (_vgnU_ifunc_wrapper)
+--41-- REDIR: 0x54845a0 (libc.so.6:__strcmp_sse42) redirected to 0x4c2cb90 (__strcmp_sse42)
+--41-- REDIR: 0x53d7b10 (libc.so.6:strlen) redirected to 0x4a237b0 (_vgnU_ifunc_wrapper)
+--41-- REDIR: 0x54b4e90 (libc.so.6:__strlen_sse2_pminub) redirected to 0x4c2b9d0 (strlen)
+--41-- REDIR: 0x53d95b0 (libc.so.6:strncpy) redirected to 0x4a237b0 (_vgnU_ifunc_wrapper)
+--41-- REDIR: 0x53e5930 (libc.so.6:__strncpy_sse2_unaligned) redirected to 0x4c2c060 (__strncpy_sse2_unaligned)
+--41-- REDIR: 0x53d0f70 (libc.so.6:malloc) redirected to 0x4c28b5c (malloc)
+--41-- REDIR: 0x53f0540 (libc.so.6:__GI_strstr) redirected to 0x4c2feb0 (__strstr_sse2)
+--41-- REDIR: 0x53e1150 (libc.so.6:strchrnul) redirected to 0x4c2f740 (strchrnul)
+--41-- REDIR: 0x53d1370 (libc.so.6:free) redirected to 0x4c29c56 (free)
+--41-- REDIR: 0x53da870 (libc.so.6:__GI_mempcpy) redirected to 0x4c2f950 (__GI_mempcpy)
+--41-- REDIR: 0x53df8d0 (libc.so.6:__GI_memcpy) redirected to 0x4c2d580 (__GI_memcpy)
+--41-- REDIR: 0x53d1960 (libc.so.6:calloc) redirected to 0x4c2a8df (calloc)
+--41-- REDIR: 0x53d1450 (libc.so.6:realloc) redirected to 0x4c2aaae (realloc)
+--41-- REDIR: 0x53da080 (libc.so.6:bcmp) redirected to 0x4a237b0 (_vgnU_ifunc_wrapper)
+--41-- REDIR: 0x54af7c0 (libc.so.6:__memcmp_sse4_1) redirected to 0x4c2e610 (__memcmp_sse4_1)
+--41-- REDIR: 0x53d9d30 (libc.so.6:memchr) redirected to 0x4c2cc80 (memchr)
+--41-- REDIR: 0x53d7ce0 (libc.so.6:strncat) redirected to 0x4a237b0 (_vgnU_ifunc_wrapper)
+--41-- REDIR: 0x53e8a10 (libc.so.6:__strncat_sse2_unaligned) redirected to 0x4c2b860 (strncat)
+--41-- REDIR: 0x53f0b00 (libc.so.6:strstr) redirected to 0x4a237b0 (_vgnU_ifunc_wrapper)
+--41-- REDIR: 0x54864d0 (libc.so.6:__strstr_sse42) redirected to 0x4c2ff40 (__strstr_sse42)
+--41-- REDIR: 0x53e0f40 (libc.so.6:__GI___rawmemchr) redirected to 0x4c2f7a0 (__GI___rawmemchr)
+--41-- REDIR: 0x53df860 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x4a237b0 (_vgnU_ifunc_wrapper)
+--41-- REDIR: 0x549a250 (libc.so.6:__memcpy_ssse3_back) redirected to 0x4c2cfa0 (memcpy@@GLIBC_2.14)
+--41-- REDIR: 0x53d5e00 (libc.so.6:strcat) redirected to 0x4a237b0 (_vgnU_ifunc_wrapper)
+--41-- REDIR: 0x53e8120 (libc.so.6:__strcat_sse2_unaligned) redirected to 0x4c2b680 (strcat)
+--41-- REDIR: 0x53d6000 (libc.so.6:index) redirected to 0x4a237b0 (_vgnU_ifunc_wrapper)
+--41-- REDIR: 0x54844f0 (libc.so.6:__strchr_sse42) redirected to 0x4c2b640 (index)
+--41-- REDIR: 0x53d7b60 (libc.so.6:__GI_strlen) redirected to 0x4c2b9f0 (__GI_strlen)
+==41== 
+==41== HEAP SUMMARY:
+==41==     in use at exit: 40,028 bytes in 3 blocks
+==41==   total heap usage: 91,410 allocs, 91,407 frees, 1,058,096,512 bytes allocated
+==41== 
+==41== Searching for pointers to 3 not-freed blocks
+==41== Checked 277,520 bytes
+==41== 
+==41== 39,928 (7,160 direct, 32,768 indirect) bytes in 1 blocks are definitely lost in loss record 3 of 3
+==41==    at 0x4C28BE3: malloc (vg_replace_malloc.c:299)
+==41==    by 0x513F996: inflateInit2_ (in /usr/local/lib/libz.so.1.2.10)
+==41==    by 0x410CFA: fzseek (zindex.c:319)
+==41==    by 0x410FE0: fzseekNearest (zindex.c:391)
+==41==    by 0x40C9BE: function_read_tfasta (assign_weights_from_gff.c:2249)
+==41==    by 0x40AB3C: assign_weights_from_gff (assign_weights_from_gff.c:1780)
+==41==    by 0x40E876: main (main_weight4tfa.c:247)
+==41== 
+==41== LEAK SUMMARY:
+==41==    definitely lost: 7,160 bytes in 1 blocks
+==41==    indirectly lost: 32,768 bytes in 1 blocks
+==41==      possibly lost: 0 bytes in 0 blocks
+==41==    still reachable: 100 bytes in 1 blocks
+==41==         suppressed: 0 bytes in 0 blocks
+==41== Reachable blocks (those to which a pointer was found) are not shown.
+==41== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==41== 
+==41== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==41== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

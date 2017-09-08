@@ -1,0 +1,8 @@
+#!genome-build Sscrofa10.2
+#!genome-version Sscrofa10.2
+#!genome-date 2011-08
+#!genome-build-accession NCBI:GCA_000003025.4
+#!genebuild-last-updated 2014-02
+chr10	ensembl	CDS	737	2210	.	+	2	gene_id "ENSSSCG00000010794"; gene_version "2"; transcript_id "ENSSSCT00000011810"; transcript_version "2"; exon_number "5"; gene_name "PALB2"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "PALB2-201"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "ENSSSCP00000011507"; protein_version "2";
+chr12	ensembl	CDS	737	2210	.	+	2	gene_id "ENSSSCG00000010794"; gene_version "2"; transcript_id "ENSSSCT00000011810"; transcript_version "2"; exon_number "5"; gene_name "PALB2"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "PALB2-201"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "ENSSSCP00000011507"; protein_version "2";
+chr14	ensembl	CDS	737	2210	.	+	2	gene_id "ENSSSCG00000010794"; gene_version "2"; transcript_id "ENSSSCT00000011810"; transcript_version "2"; exon_number "5"; gene_name "PALB2"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "PALB2-201"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "ENSSSCP00000011507"; protein_version "2";
