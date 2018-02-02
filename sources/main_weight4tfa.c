@@ -63,6 +63,8 @@ int main(int argc, const char * argv[]) {
     double *vector_sizepos; /*weights*/
     double *vector_segrpos; /*reject syn/nsyn/sil variants when no assigned*/
 
+    memset( file_out, 0, MSP_MAX_FILENAME);
+
     memset( chr_name_all, 0, MSP_MAX_NAME);
     memset( chr_length_all, 0, MSP_MAX_NAME);
     
@@ -90,6 +92,10 @@ int main(int argc, const char * argv[]) {
     }
     
     /*define the file for weigth for positions*/
+    if(file_out[0] == '\0') {
+        strcpy(file_out,file_in);
+        strcat(file_out,"_WEIGHTS.gz");
+    }
     if( (file_output = fzopen( file_out, "w", &file_output_gz)) == 0) {
         fprintf(stdout,"\n It is not possible to write in the output weight file %s\n", file_out);
         exit(1);
@@ -312,7 +318,6 @@ void usage(void)
     printf(WEIGHT4TFA);
     printf("\nFlags:\n");
     printf("      -i [path and name of the tfa file (gz file indexed)]\n");
-    printf("      -o [path and name of the output weighted file (text or gz)]\n");
     printf("      -g [path of the GFF_file]\n");
     printf("         [add also: coding,noncoding,synonymous,nonsynonymous,silent, others (whatever annotated)]\n");
     printf("         [if 'synonymous', 'nonsynonymous', 'silent' add: Genetic_Code: Nuclear_Universal,mtDNA_Drosophila,mtDNA_Mammals,Other]\n");
@@ -322,7 +327,8 @@ void usage(void)
     printf("      -l [total length of each scaffold(s). if more than one, separated by commas]\n");
     printf("   OPTIONAL PARAMETERS:\n");
     printf("      -h [help and exit]\n");
-    printf("      -G [number of samples in the outgroup (if exist, the last samples)]. DEFAULT: 0\n");
+    printf("      -o [path and name of the output weighted file (must be ending with .gz)]\n");
+    printf("      -G [number of samples in the outgroup (if exist. Only allowed the last samples in the list)]. DEFAULT: 0\n");
     printf("      -m [masking regions: file indicating the start and the end of regions to be masked by 0 weights]. DEFAULT: NONE\n");
     printf("      -C [coordinates of regions: file indicating the start and the end of regions to be weighted (rest would be weighted as 0 if the file is included)]. DEFAULT: NONE\n");
     printf("\n");
