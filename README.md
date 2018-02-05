@@ -1,7 +1,7 @@
 # weight4tfa
 Calculates weights for tfasta files (must be .gz and indexed)
 
-#weight4tfa v0.1beta (20180202) Sebastian E. Ramos-Onsins.
+#weight4tfa v0.1beta (20180205) Sebastian E. Ramos-Onsins.
 
 Flags:
       -i [path and name of the tfa file (gz file indexed)]

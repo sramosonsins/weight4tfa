@@ -102,7 +102,7 @@ int main(int argc, const char * argv[]) {
     }
     
     /*print all the argv. Header*/
-    fzprintf(file_output,&file_output_gz,"#weight4tfa ");
+    /*fzprintf(file_output,&file_output_gz,"#weight4tfa ");*/
     for(i=1;i<argc;i++) {
         fzprintf(file_output,&file_output_gz,"%s ",argv[i]);
     }
