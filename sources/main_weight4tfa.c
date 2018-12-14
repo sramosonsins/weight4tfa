@@ -13,12 +13,12 @@ int main(int argc, const char * argv[]) {
     char *chr_name;
     char chr_name_all[ MSP_MAX_NAME];
     char **chr_name_array;
-    int nscaffolds;
+    unsigned long nscaffolds;
 
     long int lentotal;
     char chr_length_all[MSP_MAX_NAME];
     char **chr_length_array;
-    int nscaffolds2;
+    /*int nscaffolds2;*/
  
     char file_in[ MSP_MAX_FILENAME];
     char file_out[MSP_MAX_FILENAME];
@@ -53,7 +53,7 @@ int main(int argc, const char * argv[]) {
     int outgroup = 0;
     
     long int x;
-    int i,j,k;
+    unsigned long i/*,j,k*/;
     
     long int nwindows,masked_nwindows;
     long int *wgenes;
@@ -127,6 +127,11 @@ int main(int argc, const char * argv[]) {
 
     /*separate all values of the list chr_name_all in chr_name_array: */
     /* Only do the list if input and output is tfa*/
+    if(read_index_file(chr_name_all,&nscaffolds,&chr_name_array,&chr_length_array)) {
+        printf("\nError reading the index file %s",chr_name_all);
+        exit(1);
+    }
+    /*
     nscaffolds = 1;
     chr_name_array = (char **)calloc(nscaffolds,sizeof(char *));
     chr_name_array[0] = (char *)calloc(MSP_MAX_NAME,sizeof(char));
@@ -167,6 +172,7 @@ int main(int argc, const char * argv[]) {
         fzprintf(file_logerr,&file_logerr_gz,"\nERROR: the number of scaffolds is not coincident in options -l and -n.\n");
         exit(1);
     }
+    */
     
     /**************************************/
     /**************************************/
@@ -323,8 +329,8 @@ void usage(void)
     printf("         [if 'synonymous', 'nonsynonymous', 'silent' add: Genetic_Code: Nuclear_Universal,mtDNA_Drosophila,mtDNA_Mammals,Other]\n");
     printf("         [if 'Other', introduce the single letter code for the 64 triplets in the order UUU UUC UUA UUG ... etc.]\n");
     printf("      -c [in case use coding regions, criteria to consider transcripts (max/min/first/long)]. DEFAULT: long\n");
-    printf("      -n [name of each scaffold to analyze. tfa can be a list separated by commas(ex. -n chr1,chr2,chr3]\n");
-    printf("      -l [total length of each scaffold(s). if more than one, separated by commas]\n");
+    printf("      -n [name of the file containing the name(s) of scaffold(s) and their length (separated by a tab), one per line (ex. fai file)]\n");
+    /*printf("      -l [total length of each scaffold(s). if more than one, separated by commas]\n");*/
     printf("   OPTIONAL PARAMETERS:\n");
     printf("      -h [help and exit]\n");
     printf("      -o [path and name of the output weighted file (must be ending with .gz)]\n");
@@ -831,5 +837,76 @@ int  check_comment(int *c, FILE *file_input, SGZip *file_input_gz) {
         return(0);
     
     return(1);
+}
+
+int read_index_file(char *chr_name_all, unsigned long *nscaffolds,char ***chr_name_array,char ***chr_length_array) {
+    
+    FILE *file_scaffolds;
+    char *buf;
+    int c;
+    int k;
+    
+    *nscaffolds = 1;
+    chr_name_array[0] = (char **)calloc(*nscaffolds,sizeof(char *));
+    chr_name_array[0][0] = (char *)calloc(MSP_MAX_NAME,sizeof(char));
+    chr_length_array[0] = (char **)calloc(*nscaffolds,sizeof(char *));
+    chr_length_array[0][0] = (char *)calloc(MSP_MAX_NAME,sizeof(char));
+    
+    if (!(file_scaffolds = fopen(chr_name_all,"r"))) {
+        printf("Error reading the input file %s\n",chr_name_all);
+        return(1);
+    }
+    if(!(buf = (char *)malloc(BUFSIZ))) {
+        puts("\nError: Not enough memory to read  the input file.\n");
+        return(1);
+    }
+    setbuf(file_scaffolds,buf);
+    c=fgetc(file_scaffolds);
+    while(c != EOF) {
+        k=0;
+        chr_name_array[0][*nscaffolds-1][k] = c; k++;
+        while((c=fgetc(file_scaffolds))!= 9 && c!= 10 && c!=13 && c!=-1 && c!=0 && k<MSP_MAX_NAME-1) {
+            chr_name_array[0][*nscaffolds-1][k] = c; k++;
+        }
+        chr_name_array[0][*nscaffolds-1][k] = '\0';
+        if(c!= 9 && c!= 32) {
+            printf("Error reading the input file %s:\n scaffold (%s) without length information.\n",chr_name_all, chr_name_array[0][*nscaffolds-1]);
+            return(1);
+        }
+        do {
+            c=fgetc(file_scaffolds);
+        }while(!(c!= 9 && c!= 32 && c!= 10 && c!=13 && c!=-1 && c!=EOF));
+        if(c==EOF) {
+            printf("Error reading the input file %s:\n scaffold (%s) without length information.\n",chr_name_all, chr_name_array[0][*nscaffolds-1]);
+            return(1);
+        }
+        k=0;
+        chr_length_array[0][*nscaffolds-1][k] = c; k++;
+        while((c=fgetc(file_scaffolds)) != 9 && c != 32 && c!= 10 && c!=13 && c!=-1 && c!=0 && k<MSP_MAX_NAME-1) {
+            chr_length_array[0][*nscaffolds-1][k] = c; k++;
+        }
+        chr_length_array[0][*nscaffolds-1][k] = '\0';
+        /*check next line, if exist*/
+        if(c==32 || c==9) {
+            do {
+                c=fgetc(file_scaffolds);
+            }while(c!=10 && c!= 13 && c!=EOF);
+        }
+        while(c==10 || c==13) {
+            c=fgetc(file_scaffolds);
+        }
+        if(c==EOF)
+            break;
+        /*if exist, prepare new row in arrays*/
+        *nscaffolds += 1;
+        chr_name_array[0] = (char **)realloc(chr_name_array[0],*nscaffolds*sizeof(char *));
+        chr_name_array[0][*nscaffolds-1] = (char *)calloc(MSP_MAX_NAME,sizeof(char));
+        chr_length_array[0] = (char **)realloc(chr_length_array[0],*nscaffolds*sizeof(char *));
+        chr_length_array[0][*nscaffolds-1] = (char *)calloc(MSP_MAX_NAME,sizeof(char));
+    }
+    fclose(file_scaffolds);
+    free(buf);
+    
+    return(0);
 }
 

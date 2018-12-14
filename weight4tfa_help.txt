@@ -1,4 +1,4 @@
-#weight4tfa v0.1beta (20180205) Sebastian E. Ramos-Onsins.
+#weight4tfa v0.1beta (20181203) Sebastian E. Ramos-Onsins.
 
 Flags:
       -i [path and name of the tfa file (gz file indexed)]
@@ -7,8 +7,7 @@ Flags:
          [if 'synonymous', 'nonsynonymous', 'silent' add: Genetic_Code: Nuclear_Universal,mtDNA_Drosophila,mtDNA_Mammals,Other]
          [if 'Other', introduce the single letter code for the 64 triplets in the order UUU UUC UUA UUG ... etc.]
       -c [in case use coding regions, criteria to consider transcripts (max/min/first/long)]. DEFAULT: long
-      -n [name of each scaffold to analyze. tfa can be a list separated by commas(ex. -n chr1,chr2,chr3]
-      -l [total length of each scaffold(s). if more than one, separated by commas]
+      -n [name of the file containing the name(s) of scaffold(s) and their length (separated by a tab), one per line (ex. fai file)]
    OPTIONAL PARAMETERS:
       -h [help and exit]
       -o [path and name of the output weighted file (must be ending with .gz)]

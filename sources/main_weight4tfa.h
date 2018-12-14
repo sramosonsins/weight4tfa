@@ -60,9 +60,10 @@ extern "C" {
                                char *criteria_transcript,
                                int outgroup,
                                char *chr_name,
-                               int i,
+                               unsigned long i,
                                long int n_site);
     int check_comment(int *c, FILE *file_input, SGZip *file_input_gz);
+    int read_index_file(char *chr_name_all, unsigned long *nscaffolds,char ***chr_name_array,char ***chr_length_array);
     #ifdef	__cplusplus
 }
 #endif

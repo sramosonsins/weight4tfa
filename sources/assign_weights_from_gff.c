@@ -39,7 +39,7 @@ int assign_weights_from_gff(char *name_fileinputgff,
                            char *criteria_transcripts,
                            int outgroup_presence,
                            char *chr_name,
-                           int first,
+                           unsigned long first,
                            long int n_site) {
     
     char *row,*f,cstrand[1],cframe[2],aaseq[1],aaput[1];

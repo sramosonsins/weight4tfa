@@ -47,7 +47,7 @@ int assign_weights_from_gff(char *name_fileinputgff,
                             char *criteria_transcript,
                             int outgroup_presence,
                             char *chr_name,
-                            int first,
+                            unsigned long first,
                             long int n_site);
 
 int tripletnsamp(char *cod3n,char *DNA_matr,char strand,double *cmat,
