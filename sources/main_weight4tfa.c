@@ -91,10 +91,12 @@ int main(int argc, const char * argv[]) {
         }
     }
     
-    /*define the file for weigth for positions*/
+    /*define the file for weight for positions*/
     if(file_out[0] == '\0') {
-        strcpy(file_out,file_in);
-        strcat(file_out,"_WEIGHTS.gz");
+        fprintf(stdout,"\n Error: The output file must be defined\n");
+        exit(1);
+        //strcpy(file_out,file_in);
+        //strcat(file_out,"_WEIGHTS.gz");
     }
     if( (file_output = fzopen( file_out, "w", &file_output_gz)) == 0) {
         fprintf(stdout,"\n It is not possible to write in the output weight file %s\n", file_out);
@@ -331,9 +333,9 @@ void usage(void)
     printf("      -c [in case use coding regions, criteria to consider transcripts (max/min/first/long)]. DEFAULT: long\n");
     printf("      -n [name of the file containing the name(s) of scaffold(s) and their length (separated by a tab), one per line (ex. fai file)]\n");
     /*printf("      -l [total length of each scaffold(s). if more than one, separated by commas]\n");*/
+    printf("      -o [path and name of the output weighted file (will be ending with .gz)]\n");
     printf("   OPTIONAL PARAMETERS:\n");
     printf("      -h [help and exit]\n");
-    printf("      -o [path and name of the output weighted file (must be ending with .gz)]\n");
     printf("      -G [number of samples in the outgroup (if exist. Only allowed the last samples in the list)]. DEFAULT: 0\n");
     printf("      -m [masking regions: file indicating the start and the end of regions to be masked by 0 weights]. DEFAULT: NONE\n");
     printf("      -C [coordinates of regions: file indicating the start and the end of regions to be weighted (rest would be weighted as 0 if the file is included)]. DEFAULT: NONE\n");
@@ -382,6 +384,8 @@ int collect_arguments(int argc, const char **argv,
                 case 'o' : /* output file */
                     arg++;
                     strcpy( file_out, argv[arg] );
+                    if(strstr(file_out, ".gz")==0)
+                        strcat(file_out,".gz"); /*include extension .gz!*/
                     break;
                 case 'g': /* g GFF file name, AND more words
                            2nd : synonymous, nonsynonymous, silent or whatever
