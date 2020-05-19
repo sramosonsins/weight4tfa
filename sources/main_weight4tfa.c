@@ -93,10 +93,10 @@ int main(int argc, const char * argv[]) {
     
     /*define the file for weight for positions*/
     if(file_out[0] == '\0') {
-        fprintf(stdout,"\n Error: The output file must be defined\n");
-        exit(1);
-        //strcpy(file_out,file_in);
-        //strcat(file_out,"_WEIGHTS.gz");
+        //fprintf(stdout,"\n Error: The output file must be defined\n");
+        //exit(1);
+        strcpy(file_out,file_in);
+        strcat(file_out,"_WEIGHTS.gz");
     }
     if( (file_output = fzopen( file_out, "w", &file_output_gz)) == 0) {
         fprintf(stdout,"\n It is not possible to write in the output weight file %s\n", file_out);
