@@ -102,7 +102,7 @@ int assign_weights_from_gff(char *name_fileinputgff,
     int type_output = 0;
     char *DNA_matr=0;
 
-    long int n_sitei;
+    long int n_sitei=0;
     long int ii2end;
     long int startDNAmatr=0;
     long int endDNAmatr=0;
@@ -1782,6 +1782,10 @@ int assign_weights_from_gff(char *name_fileinputgff,
                 fzprintf(file_logerr,file_logerr_gz,"Error reading tfa file: %s:%ld-%ld",chr_name,startframe,endframe);
                 return(0);
             }
+            if(n_sitei > n_site) {
+                fzprintf(file_logerr,file_logerr_gz,"Error: tfa file is small than coordinates defined");
+                return(0);
+            }
             for(ii=ii2;ii<ii2end;ii++) {
                 if(matrix_sizepos[ii] > 0) {
                     if(outgroup_presence == 0) {
@@ -1816,7 +1820,12 @@ int assign_weights_from_gff(char *name_fileinputgff,
             free(DNA_matr);
         }
 		
-		free(cmat);
+        if(n_sitei > n_site) {
+            fzprintf(file_logerr,file_logerr_gz,"Error: tfa file is small than coordinates defined");
+            return(0);
+        }
+
+        free(cmat);
 		free(cmatnc);
 		free(cmatsil);
 		if(strcmp(subset_positions,"synonymous") == 0 || strcmp(subset_positions,"nonsynonymous") == 0 || strcmp(subset_positions,"silent") == 0 || strcmp(subset_positions,"silent") == 0 || strcmp(subset_positions,"0-fold") == 0 || strcmp(subset_positions,"2-fold") == 0 || strcmp(subset_positions,"3-fold") == 0 || strcmp(subset_positions,"4-fold") == 0) {
