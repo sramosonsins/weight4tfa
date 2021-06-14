@@ -114,9 +114,9 @@ int assign_weights_from_gff(char *name_fileinputgff,
     aaput[0]=0;
     
     
-    /*printf("\nReading GTF file...");*/
+    /*printf("\nReading GTF file chr_name: %s...",chr_name);*/
     fflush(stdout);
-    fzprintf(file_logerr,file_logerr_gz,"\nReading GTF file...");
+    fzprintf(file_logerr,file_logerr_gz,"\nReading GTF file: chr_name: %s...",chr_name);
 
     /*calculate the degeneration of each triplet and position:*/
     if(function_do_nfold_triplets(n_fold,genetic_code,tripletsN) == 0)
@@ -236,8 +236,8 @@ int assign_weights_from_gff(char *name_fileinputgff,
 						fieldsgff[nrows].strand[0] = fields[n][0];
 						break;
 					case 7:
-						if(fields[n][0] == '1') {
-							fieldsgff[nrows].frame[0] = '2';
+						if(fields[n][0] == '1') { /*the number of nt to remove to achieve the initial codon*/
+							fieldsgff[nrows].frame[0] = '2'; /*the nt position of the codon [0,1,2]*/
 						}
 						else {
 							if(fields[n][0] == '2') {fieldsgff[nrows].frame[0] = '1';
@@ -861,29 +861,31 @@ int assign_weights_from_gff(char *name_fileinputgff,
 				
 				l = 0;
 				while(l <= end-start) {
-					while(matrix_coding[ntransc][l] == 0) {l++;}
-					jj = (int)l;
-					while(matrix_coding[ntransc][jj] != 0) {jj++;}
-					if(jj-1<=end-start) {
-						memcpy(fieldsgff2+nrows2,fieldsgff+j,sizeof(struct valuesgff)*1);/*include row in fieldsgff2*/
-						fieldsgff2[nrows2].start     = l  + start;
-						fieldsgff2[nrows2].end       = jj-1 + start;
-						fieldsgff2[nrows2].strand[0] = cstrand[0];
-						if(fieldsgff2[nrows2].strand[0] == '+') fieldsgff2[nrows2].frame[0]  = matrix_coding[ntransc][l];
-						if(fieldsgff2[nrows2].strand[0] == '-') fieldsgff2[nrows2].frame[0]  = matrix_coding[ntransc][jj-1];
-						strcpy(fieldsgff2[nrows2].feature,"CDS\0");
-						strcpy(fieldsgff2[nrows2].transcript_id,transcript);
-						nrows2++;
-						/*
-						if(nrows2 >= nrows) {
-							if(!(fieldsgff2 = (struct valuesgff *)realloc(fieldsgff2,(nrows2+1)*sizeof(struct valuesgff)))) {
-								fzprintf(file_logerr,file_logerr_gz,"\nError: memory not reallocated. use_gff.3b \n");
-								return 0; 
-							}
-						}
-						*/
-					}
-					l = jj;
+					while(matrix_coding[ntransc][l] == 0 && l<= end-start) {l++;}
+                    if(l <= end-start) {
+                        jj = (int)l;
+                        while(matrix_coding[ntransc][jj] != 0) {jj++;}
+                        if(jj-1<=end-start) {
+                            memcpy(fieldsgff2+nrows2,fieldsgff+j,sizeof(struct valuesgff)*1);/*include row in fieldsgff2*/
+                            fieldsgff2[nrows2].start     = l  + start;
+                            fieldsgff2[nrows2].end       = jj-1 + start;
+                            fieldsgff2[nrows2].strand[0] = cstrand[0];
+                            if(fieldsgff2[nrows2].strand[0] == '+') fieldsgff2[nrows2].frame[0]  = matrix_coding[ntransc][l];
+                            if(fieldsgff2[nrows2].strand[0] == '-') fieldsgff2[nrows2].frame[0]  = matrix_coding[ntransc][jj-1];
+                            strcpy(fieldsgff2[nrows2].feature,"CDS\0");
+                            strcpy(fieldsgff2[nrows2].transcript_id,transcript);
+                            nrows2++;
+                            /*
+                            if(nrows2 >= nrows) {
+                                if(!(fieldsgff2 = (struct valuesgff *)realloc(fieldsgff2,(nrows2+1)*sizeof(struct valuesgff)))) {
+                                    fzprintf(file_logerr,file_logerr_gz,"\nError: memory not reallocated. use_gff.3b \n");
+                                    return 0;
+                                }
+                            }
+                            */
+                        }
+                        l = jj;
+                    }
 				}
 			}
 			/*define all the rest of rows that are not CDS in fieldsgff2*/
@@ -1278,9 +1280,8 @@ int assign_weights_from_gff(char *name_fileinputgff,
                         startDNAmatr = startframe;
                         endDNAmatr  = endframe;
                         DNA_matr = (char *)calloc(endDNAmatr-startDNAmatr+1,sizeof(char));
-                        if(function_read_tfasta(file_input,file_input_gz,file_input_gz_index,file_logerr,file_logerr_gz,
-                                                startDNAmatr+1,endDNAmatr+1,n_samp,&n_sitei,&DNA_matr,chr_name,first) == 0) {
-                            fzprintf(file_logerr,file_logerr_gz,"Error reading tfa file: %s:%ld-%ld",chr_name,startframe,endframe);
+                        if(function_read_tfasta(file_input,file_input_gz,file_input_gz_index, file_logerr,file_logerr_gz,startDNAmatr+1,endDNAmatr+1,n_samp, &n_sitei,&DNA_matr,chr_name,first) == 0) {
+                            fzprintf(file_logerr,file_logerr_gz,"Error reading tfa file: %s:%ld-%ld",chr_name,startframe+1,endframe+1);
                             return(0);
                         }
                         /*
@@ -2256,10 +2257,10 @@ int function_read_tfasta(FILE *file_input,SGZip *file_input_gz,struct SGZIndex *
     row_num = -1;
     
     if(fzseekNearest(file_input, file_input_gz,index_input, ID, MAXLEN, &row_num) != GZ_OK) { //==GZ_ERROR_DATA_FILE?
-        fzprintf(file_logerr,file_logerr_gz,"ID not found in the tfa file (or not indexed position): %s\n",ID);
-        /*no position found*/
+        fzprintf(file_logerr,file_logerr_gz,"\nID not found in the tfa file (or not indexed position): %s\n",ID);
+        /*no position found. All positions marked in GFF should be find in tfasta and in index*/
         free(DNA_matr2);
-        return(1);
+        return(0); /*or 1??*/
     }
     /*f_num = row_num;*/
     

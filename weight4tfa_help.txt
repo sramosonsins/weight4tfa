@@ -1,4 +1,4 @@
-#weight4tfa v0.1beta (20200614) Sebastian E. Ramos-Onsins.
+#weight4tfa v0.1beta (20210614) Sebastian E. Ramos-Onsins.
 
 Flags:
       -i [path and name of the tfa file (gz file indexed)]
