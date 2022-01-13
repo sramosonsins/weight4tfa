@@ -63,13 +63,11 @@ int main(int argc, const char * argv[]) {
     double *vector_sizepos; /*weights*/
     double *vector_segrpos; /*reject syn/nsyn/sil variants when no assigned*/
 
-    memset( file_in, 0, MSP_MAX_FILENAME);
     memset( file_out, 0, MSP_MAX_FILENAME);
 
     memset( chr_name_all, 0, MSP_MAX_NAME);
     memset( chr_length_all, 0, MSP_MAX_NAME);
     
-    memset( file_GFF, 0, MSP_MAX_FILENAME);
     memset( file_Wcoord, 0, MSP_MAX_FILENAME);
     memset( file_masked, 0, MSP_MAX_FILENAME);
 
@@ -93,10 +91,8 @@ int main(int argc, const char * argv[]) {
         }
     }
     
-    /*define the file for weight for positions*/
+    /*define the file for weigth for positions*/
     if(file_out[0] == '\0') {
-        //fprintf(stdout,"\n Error: The output file must be defined\n");
-        //exit(1);
         strcpy(file_out,file_in);
         strcat(file_out,"_WEIGHTS.gz");
     }
@@ -192,7 +188,7 @@ int main(int argc, const char * argv[]) {
     masked_nwindows = 0;
     wgenes = 0;
     masked_wgenes = 0;
-    
+
     for(i=0;i<nscaffolds;i++) {
         /* Open coordinates file */
         if( file_Wcoord[0] == '\0' ) {
@@ -234,7 +230,8 @@ int main(int argc, const char * argv[]) {
             vector_sizepos[x] = (double)1;
             vector_segrpos[x] = (double)1;
         }
-        
+
+
         /* read coordinates file */
         if( file_Wcoord[0] != '\0' ) {
             if(read_coordinates(file_wcoor,&file_wcoor_gz,file_output,&file_output_gz, file_logerr, &file_logerr_gz,&wgenes,&nwindows,chr_name) == 0) {
@@ -259,22 +256,21 @@ int main(int argc, const char * argv[]) {
         
         /*read sorted GFF*/
         /*assign final weights according to tfa data at each specific gene*/
-        if( file_GFF[0] != '\0' ) {
-            if(assign_weights_from_gff(file_GFF,
-                       file_input,&file_input_gz,&file_input_gz_index,
-                       file_output,&file_output_gz,
-                       file_logerr,&file_logerr_gz,
-                       vector_sizepos,vector_segrpos,
-                       include_unknown,subset_positions,genetic_code,criteria_transcript,
-                       outgroup,chr_name,i,lentotal) == 0) {
-                fzprintf(file_logerr,&file_logerr_gz,"\nError reading GFF file. No complete output file released.\n");
-                unload_all_index_positions(&file_input_gz_index);
-                fzclose(file_input, &file_input_gz);
-                fzprintf(file_logerr,&file_logerr_gz,"\nProgram Ended\n");
-                fzclose(file_logerr, &file_logerr_gz);
-               exit(1);
-            }
+        if(assign_weights_from_gff(file_GFF,
+                   file_input,&file_input_gz,&file_input_gz_index,
+                   file_output,&file_output_gz,
+                   file_logerr,&file_logerr_gz,
+                   vector_sizepos,vector_segrpos,
+                   include_unknown,subset_positions,genetic_code,criteria_transcript,
+                   outgroup,chr_name,i,lentotal) == 0) {
+            fzprintf(file_logerr,&file_logerr_gz,"\nError reading GFF file. No complete output file released.\n");
+            unload_all_index_positions(&file_input_gz_index);
+            fzclose(file_input, &file_input_gz);
+            fzprintf(file_logerr,&file_logerr_gz,"\nProgram Ended\n");
+            fzclose(file_logerr, &file_logerr_gz);
+           exit(1);
         }
+        
         /**************************************/
         /**************************************/
         /**************************************/
@@ -328,19 +324,19 @@ void usage(void)
     printf(WEIGHT4TFA);
     printf("\nFlags:\n");
     printf("      -i [path and name of the tfa file (gz file indexed)]\n");
-    printf("      -o [path and name of the output weighted file (will be ending with .gz)]\n");
-    printf("      -n [name of the file containing the name(s) of scaffold(s) and their length (separated by a tab), one per line (ex. fai file)]\n");
-    /*printf("      -l [total length of each scaffold(s). if more than one, separated by commas]\n");*/
-    printf("   OPTIONAL PARAMETERS:\n");
     printf("      -g [path of the GFF_file]\n");
     printf("         [add also: coding,noncoding,synonymous,nonsynonymous,silent, others (whatever annotated)]\n");
     printf("         [if 'synonymous', 'nonsynonymous', 'silent' add: Genetic_Code: Nuclear_Universal,mtDNA_Drosophila,mtDNA_Mammals,Other]\n");
     printf("         [if 'Other', introduce the single letter code for the 64 triplets in the order UUU UUC UUA UUG ... etc.]\n");
     printf("      -c [in case use coding regions, criteria to consider transcripts (max/min/first/long)]. DEFAULT: long\n");
+    printf("      -n [name of the file containing the name(s) of scaffold(s) and their length (separated by a tab), one per line (ex. fai file)]\n");
+    /*printf("      -l [total length of each scaffold(s). if more than one, separated by commas]\n");*/
+    printf("   OPTIONAL PARAMETERS:\n");
+    printf("      -h [help and exit]\n");
+    printf("      -o [path and name of the output weighted file (must be ending with .gz)]\n");
+    printf("      -G [number of samples in the outgroup (if exist. Only allowed the last samples in the list)]. DEFAULT: 0\n");
     printf("      -m [masking regions: file indicating the start and the end of regions to be masked by 0 weights]. DEFAULT: NONE\n");
     printf("      -C [coordinates of regions: file indicating the start and the end of regions to be weighted (rest would be weighted as 0 if the file is included)]. DEFAULT: NONE\n");
-    printf("      -G [number of samples in the outgroup (if exist. Only allowed the last samples in the list)]. DEFAULT: 0\n");
-    printf("      -h [help and exit]\n");
     printf("\n");
 }
 
@@ -362,6 +358,8 @@ int collect_arguments(int argc, const char **argv,
     
     int arg;
     int x;
+    /*default*/
+    strcpy( criteria_transcript, "long\0" );
     
     if( argc > 1 )
     {
@@ -386,8 +384,6 @@ int collect_arguments(int argc, const char **argv,
                 case 'o' : /* output file */
                     arg++;
                     strcpy( file_out, argv[arg] );
-                    if(strstr(file_out, ".gz")==0)
-                        strcat(file_out,".gz"); /*include extension .gz!*/
                     break;
                 case 'g': /* g GFF file name, AND more words
                            2nd : synonymous, nonsynonymous, silent or whatever
@@ -651,7 +647,7 @@ int collect_arguments(int argc, const char **argv,
                         exit(1);
                     }
                     break;
-                case 'C' : /* file with the coordinates of each window [init end](overwrite options -w and -s)*/
+                case 'W' : /* file with the coordinates of each window [init end](overwrite options -w and -s)*/
                     arg++;
                     strcpy(file_Wcoord, argv[arg] );					
                     break;

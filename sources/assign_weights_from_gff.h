@@ -15,6 +15,7 @@ extern "C" {
 #include <stdio.h> /* para BUFSIZ??*/
 #include "zutil.h"
 #include "zindex.h"
+#define SIZE_ROW 10000
 
 struct valuesgff
 {
