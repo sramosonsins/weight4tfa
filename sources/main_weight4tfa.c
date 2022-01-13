@@ -101,12 +101,13 @@ int main(int argc, const char * argv[]) {
         exit(1);
     }
     
-    /*print all the argv. Header*/
-    /*fzprintf(file_output,&file_output_gz,"#weight4tfa ");*/
+    /*print all the argv. Header*//*
+    fzprintf(file_output,&file_output_gz,"#weight4tfa ");
     for(i=1;i<argc;i++) {
         fzprintf(file_output,&file_output_gz,"%s ",argv[i]);
     }
     fzprintf(file_output,&file_output_gz,"\n");
+    */
     
     /*initialize index file pointer*/
     /*read input index*/
