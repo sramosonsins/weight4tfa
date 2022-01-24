@@ -1,4 +1,4 @@
-#weight4tfa v0.1beta (20220113) Sebastian E. Ramos-Onsins.
+#weight4tfa v0.1beta (20220124) Sebastian E. Ramos-Onsins.
 
 Flags:
       -i [path and name of the tfa file (gz file indexed)]
@@ -6,11 +6,11 @@ Flags:
          [add also: coding,noncoding,synonymous,nonsynonymous,silent, others (whatever annotated)]
          [if 'synonymous', 'nonsynonymous', 'silent' add: Genetic_Code: Nuclear_Universal,mtDNA_Drosophila,mtDNA_Mammals,Other]
          [if 'Other', introduce the single letter code for the 64 triplets in the order UUU UUC UUA UUG ... etc.]
-      -c [in case use coding regions, criteria to consider transcripts (max/min/first/long)]. DEFAULT: long
       -n [name of the file containing the name(s) of scaffold(s) and their length (separated by a tab), one per line (ex. fai file)]
+      -o [path and name of the output weighted file (.gz extension will be included)]
    OPTIONAL PARAMETERS:
       -h [help and exit]
-      -o [path and name of the output weighted file (must be ending with .gz)]
+      -c [in case use coding regions, criteria to consider transcripts (max/min/first/long)]. DEFAULT: long
       -G [number of samples in the outgroup (if exist. Only allowed the last samples in the list)]. DEFAULT: 0
       -m [masking regions: file indicating the start and the end of regions to be masked by 0 weights]. DEFAULT: NONE
       -C [coordinates of regions: file indicating the start and the end of regions to be weighted (rest would be weighted as 0 if the file is included)]. DEFAULT: NONE

@@ -129,7 +129,7 @@ int main(int argc, const char * argv[]) {
     /*separate all values of the list chr_name_all in chr_name_array: */
     /* Only do the list if input and output is tfa*/
     if(read_index_file(chr_name_all,&nscaffolds,&chr_name_array,&chr_length_array)) {
-        printf("\nError reading the index file %s",chr_name_all);
+        printf("\nError reading the index file %s\n",chr_name_all);
         exit(1);
     }
     /*
@@ -329,12 +329,12 @@ void usage(void)
     printf("         [add also: coding,noncoding,synonymous,nonsynonymous,silent, others (whatever annotated)]\n");
     printf("         [if 'synonymous', 'nonsynonymous', 'silent' add: Genetic_Code: Nuclear_Universal,mtDNA_Drosophila,mtDNA_Mammals,Other]\n");
     printf("         [if 'Other', introduce the single letter code for the 64 triplets in the order UUU UUC UUA UUG ... etc.]\n");
-    printf("      -c [in case use coding regions, criteria to consider transcripts (max/min/first/long)]. DEFAULT: long\n");
     printf("      -n [name of the file containing the name(s) of scaffold(s) and their length (separated by a tab), one per line (ex. fai file)]\n");
+    printf("      -o [path and name of the output weighted file (.gz extension will be included)]\n");
     /*printf("      -l [total length of each scaffold(s). if more than one, separated by commas]\n");*/
     printf("   OPTIONAL PARAMETERS:\n");
     printf("      -h [help and exit]\n");
-    printf("      -o [path and name of the output weighted file (must be ending with .gz)]\n");
+    printf("      -c [in case use coding regions, criteria to consider transcripts (max/min/first/long)]. DEFAULT: long\n");
     printf("      -G [number of samples in the outgroup (if exist. Only allowed the last samples in the list)]. DEFAULT: 0\n");
     printf("      -m [masking regions: file indicating the start and the end of regions to be masked by 0 weights]. DEFAULT: NONE\n");
     printf("      -C [coordinates of regions: file indicating the start and the end of regions to be weighted (rest would be weighted as 0 if the file is included)]. DEFAULT: NONE\n");
@@ -385,6 +385,7 @@ int collect_arguments(int argc, const char **argv,
                 case 'o' : /* output file */
                     arg++;
                     strcpy( file_out, argv[arg] );
+                    strcat( file_out,".gz");
                     break;
                 case 'g': /* g GFF file name, AND more words
                            2nd : synonymous, nonsynonymous, silent or whatever
