@@ -1395,7 +1395,7 @@ int assign_weights_from_gff(char *name_fileinputgff,
                                         ii-startDNAmatr/*,file_output*//*,mainargc*/,
                                         include_unknown,type_output/*,nmhits,mhitbp*/,
                                         outgroup_presence,nsamoutg,
-                                        file_logerr,file_logerr_gz) == 0) {
+                                        file_logerr,file_logerr_gz,chr_name) == 0) {
 							cmat[ii] = (double)0;
 							do{
 								ii += k;
@@ -1462,7 +1462,7 @@ int assign_weights_from_gff(char *name_fileinputgff,
                                 if(endtrp != ii2) {
                                     if(type_output == 0 || type_output == 10) {
                                         /*if(mainargc > 1)*/ /*printf("\nError:\n Excluded codons:  Stop Codon starting at position %ld.",ii+1);*/
-                                            fzprintf(file_logerr,file_logerr_gz,"\n Excluded codons: Stop Codon starting at position %ld.",ii+1);
+                                            fzprintf(file_logerr,file_logerr_gz,"\n Excluded codons: Stop Codon starting at position %s:%ld.",chr_name,ii+1);
                                     }
                                 }
                                 stop = 1;
@@ -1526,7 +1526,7 @@ int assign_weights_from_gff(char *name_fileinputgff,
                                     if(endtrp != ii2) {
                                         if(type_output == 0 || type_output == 10) {
                                             /*if(mainargc > 1)*/ /*printf("\n Excluded codons:  Stop Codon starting at position %ld.",ii+1);*//**/
-                                                fzprintf(file_logerr,file_logerr_gz,"\n Excluded codons: Stop Codon starting at position %ld.",ii+1);
+                                                fzprintf(file_logerr,file_logerr_gz,"\n Excluded codons: Stop Codon starting at position %s:%ld.",chr_name,ii+1);
                                         }
                                     }
                                     stop = 1;
@@ -1837,7 +1837,7 @@ int assign_weights_from_gff(char *name_fileinputgff,
 int tripletnsamp(char *cod3n,char *DNA_matr,char strand,double *cmat,
 					int n_samp,long int n_site,long int end,long int ii/*,
 					FILE *file_output*//*,int mainargc*/,int include_unknown,int type_output,
-					/*long int *nmhits, long int *mhitbp,*/ int outgroup_presence, int nsamoutg,FILE *file_logerr, SGZip *file_logerr_gz)
+					/*long int *nmhits, long int *mhitbp,*/ int outgroup_presence, int nsamoutg,FILE *file_logerr, SGZip *file_logerr_gz, char *chr_name)
 {
 	int i,j,k,jj,x,z;
 	long int ii2;
@@ -2072,7 +2072,7 @@ int tripletnsamp(char *cod3n,char *DNA_matr,char strand,double *cmat,
 							continue; /*in case accepting missing values, a complete gap can be accepted*/
 						else {
                             if(type_output == 0)
-								fzprintf(file_logerr,file_logerr_gz,"\n Excluded codons:  Gap/Uncertainty starting at position %ld.",ii+1);
+								fzprintf(file_logerr,file_logerr_gz,"\n Excluded codons:  Gap/Uncertainty starting at position %s:%ld.",chr_name,ii+1);
 						}
 					}
 					return 0;
@@ -2104,7 +2104,7 @@ int tripletnsamp(char *cod3n,char *DNA_matr,char strand,double *cmat,
 								if(include_unknown == 0) {
 									/*mhitbp[*nmhits] = ii;*//*mhits are stablished by codons, not by positions*/
 									/*nmhits[0] = nmhits[0] + 1;*/
-                                    fzprintf(file_logerr,file_logerr_gz,"\n Excluded codons: Multiple Mutations starting at position %ld.",ii+1);
+                                    fzprintf(file_logerr,file_logerr_gz,"\n Excluded codons: Multiple Mutations starting at position %s:%ld.",chr_name,ii+1);
 									return 0;
 								}
 							}
@@ -2120,7 +2120,7 @@ int tripletnsamp(char *cod3n,char *DNA_matr,char strand,double *cmat,
 							if(include_unknown == 0) {
 								/*mhitbp[*nmhits] = ii;*//*mhits are stablished by codons, not by positions*/
 								/*nmhits[0] = nmhits[0] + 1;*/
-                                fzprintf(file_logerr,file_logerr_gz,"\n Excluded codons: Multiple Mutations starting at position %ld.",ii+1);
+                                fzprintf(file_logerr,file_logerr_gz,"\n Excluded codons: Multiple Mutations starting at position %s:%ld.",chr_name,ii+1);
 								return 0;
 							}
 						}

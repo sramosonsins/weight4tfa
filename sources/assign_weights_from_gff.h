@@ -55,7 +55,7 @@ int tripletnsamp(char *cod3n,char *DNA_matr,char strand,double *cmat,
 				 int n_samp,long int n_site,long int end,long int ii/*,
 				 FILE *file_output*//*,int mainargc*/,int include_unknown,int type_output,
 				 /*long int *nmhits, long int *mhitbp,*/ int outgroup_presence, int nsamoutg,
-                 FILE *file_logerr, SGZip *file_logerr_gz);
+                 FILE *file_logerr, SGZip *file_logerr_gz, char *chr_name);
 	
 int comp_trcpt_id(const void *a,const void *b);
 int comp_start_id(const void *a,const void *b);

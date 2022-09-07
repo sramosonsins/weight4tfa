@@ -19,7 +19,7 @@ extern "C" {
 	#include <stdlib.h>
 	#include <math.h>
 	
-	#define WEIGHT4TFA "#weight4tfa v0.1beta (20220124) Sebastian E. Ramos-Onsins.\n"
+	#define WEIGHT4TFA "#weight4tfa v0.1beta (20220907) Sebastian E. Ramos-Onsins.\n"
 
 	#define MSP_MAX_FILENAME			(unsigned long) 4096 /**< @brief Maximum Filename Length allowed */
 	#define MSP_MAX_GFF_WORDLEN         (unsigned long) 20
